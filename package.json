@@ -1,0 +1,23 @@
+{
+  "name": "open-lt-server",
+  "version": "1.0.0",
+  "description": "Open LT node.js Server",
+  "main": "main.js",
+  "dependencies": {
+    "websocket": "^1.0.28"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/open-lt/server.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/open-lt/server/issues"
+  },
+  "homepage": "https://github.com/open-lt/server#readme"
+}

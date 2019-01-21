@@ -6,8 +6,7 @@ $(function () {
     var input = $('#input');
     var status = $('#status');
 
-    // my color assigned by the server
-    var myColor = false;
+    
     // my name sent to the server
     var myName = false;
 
@@ -24,7 +23,7 @@ $(function () {
     }
 
     // open connection
-    var connection = new WebSocket('ws://127.0.0.1:1337');
+    var connection = new WebSocket('ws://127.0.0.1:80');
 
     connection.onopen = function () {
         // first we want users to enter their names
@@ -52,21 +51,20 @@ $(function () {
 
         // NOTE: if you're not sure about the JSON structure
         // check the server source code above
-        if (json.type === 'color') { // first response from the server with user's color
-            myColor = json.data;
-            status.text(myName + ': ').css('color', myColor);
+        if (json.type === 'hello') { // first response from the server with user's name
+            status.text(myName + ': ');
             input.removeAttr('disabled').focus();
             // from now user can start sending messages
         } else if (json.type === 'history') { // entire message history
             // insert every single message to the chat window
             for (var i=0; i < json.data.length; i++) {
                 addMessage(json.data[i].author, json.data[i].text,
-                           json.data[i].color, new Date(json.data[i].time));
+                        new Date(json.data[i].time));
             }
         } else if (json.type === 'message') { // it's a single message
             input.removeAttr('disabled'); // let the user write another message
             addMessage(json.data.author, json.data.text,
-                       json.data.color, new Date(json.data.time));
+                    new Date(json.data.time));
         } else {
             console.log('Hmm..., I\'ve never seen JSON like this: ', json);
         }
@@ -111,8 +109,8 @@ $(function () {
     /**
      * Add message to the chat window
      */
-    function addMessage(author, message, color, dt) {
-        content.prepend('<p><span style="color:' + color + '">' + author + '</span> @ ' +
+    function addMessage(author, message,  dt) {
+        content.prepend('<p><span >' + author + '</span> @ ' +
              + (dt.getHours() < 10 ? '0' + dt.getHours() : dt.getHours()) + ':'
              + (dt.getMinutes() < 10 ? '0' + dt.getMinutes() : dt.getMinutes())
              + ': ' + message + '</p>');
